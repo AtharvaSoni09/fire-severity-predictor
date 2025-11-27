@@ -1,0 +1,231 @@
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --text-color: #ffffff;
+    --accent-color: #ff6b6b; /* Fire orange/red */
+    --input-bg: rgba(0, 0, 0, 0.3);
+    --success-color: #4cd137;
+    --danger-color: #e84118;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--glass-shadow);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 900px) {
+    .glass-panel {
+        grid-template-columns: 300px 1fr;
+    }
+}
+
+/* Form Styles */
+.input-section h2 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 1rem;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+/* Results Section */
+.results-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.prediction-card {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid var(--glass-border);
+}
+
+.prediction-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .analysis-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.lime-factors, .lime-graph {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+}
+
+.lime-graph img {
+    width: 100%;
+    border-radius: 8px;
+    background: white; /* LIME plots are usually white bg */
+}
+
+/* LIME List Styling */
+#lime-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lime-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+}
+
+.lime-item:last-child {
+    border-bottom: none;
+}
+
+.lime-item.positive {
+    border-left: 4px solid var(--success-color); /* Green for "Supports prediction" */
+}
+
+.lime-item.negative {
+    border-left: 4px solid var(--danger-color); /* Red for "Opposes prediction" */
+    /* Note: In fire context, "positive" usually means MORE fire, so we might want to swap colors conceptually depending on user intent. 
+       Standard LIME: Positive = pushes towards class 1 (Fire). Negative = pushes towards class 0.
+       Let's stick to Green = Increases Fire (Supports Model), Red = Decreases Fire (Opposes Model) or vice versa?
+       Usually Red = Danger (Fire). So let's make Positive (More Fire) = Red/Orange, Negative (Less Fire) = Green/Blue.
+    */
+}
+
+/* Custom coloring for LIME items based on logic */
+.factor-bar {
+    height: 6px;
+    border-radius: 3px;
+    margin-top: 4px;
+    background: #ccc;
+    width: 100px; /* max width */
+    position: relative;
+}
+
+.factor-name {
+    font-weight: 600;
+}
+
+.factor-val {
+    font-family: monospace;
+    opacity: 0.8;
+}

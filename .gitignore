@@ -1,0 +1,37 @@
+# Debug logs
+debug_log.txt
+lime_error.log
+
+# Compiled executables and build artifacts
+*.exe
+*.app
+*.dmg
+build/
+dist/
+*.spec
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables (if you add any secrets later)
+.env

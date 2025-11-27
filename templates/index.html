@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Severity Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Fire Severity Predictor</h1>
+            <p>AI-Powered Wildfire Analysis</p>
+        </header>
+
+        <main class="glass-panel">
+            <div class="input-section">
+                <h2>Environmental Factors</h2>
+                <form id="prediction-form">
+                    <div class="form-group">
+                        <label for="temp_max_F">Max Temp (°F)</label>
+                        <input type="number" id="temp_max_F" name="temp_max_F" value="75" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="humidity_pct">Humidity (%)</label>
+                        <input type="number" id="humidity_pct" name="humidity_pct" value="50" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="windspeed_mph">Wind Speed (mph)</label>
+                        <input type="number" id="windspeed_mph" name="windspeed_mph" value="6" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="precip_in">Precipitation (in)</label>
+                        <input type="number" id="precip_in" name="precip_in" value="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ndvi">NDVI (Vegetation Index)</label>
+                        <input type="number" id="ndvi" name="ndvi" value="3000" step="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pop_density">Pop Density (ppl/sq km)</label>
+                        <input type="number" id="pop_density" name="pop_density" value="200" step="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="slope">Slope (Ruggedness)</label>
+                        <input type="number" id="slope" name="slope" value="600" step="1" required>
+                    </div>
+
+                    <button type="submit" id="predict-btn">Analyze Risk</button>
+                </form>
+            </div>
+
+            <div class="results-section" id="results-section" style="display: none;">
+                <div class="prediction-card">
+                    <h3>Predicted Fire Size</h3>
+                    <div class="prediction-value"><span id="acres-value">0</span> Acres</div>
+                </div>
+
+                <div class="analysis-grid">
+                    <div class="lime-factors">
+                        <h3>Key Contributing Factors</h3>
+                        <ul id="lime-list">
+                            <!-- Factors injected here -->
+                        </ul>
+                    </div>
+                    
+                    <div class="lime-graph">
+                        <h3>Model Explanation</h3>
+                        <img id="lime-plot-img" src="" alt="LIME Explanation Graph">
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
