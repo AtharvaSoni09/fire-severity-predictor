@@ -75,6 +75,8 @@ def load_models():
             # We will create a dummy training set to initialize LIME
             # Since the model expects scaled data (which is approximately standard normal),
             # we generate random data with mean 0 and std 1.
+            # Use a fixed seed to ensure consistency across server restarts
+            np.random.seed(42)
             dummy_train_data = np.random.normal(0, 1, (1000, 7))
             feature_names = ["temp_max_F", "humidity_pct", "precip_in", "windspeed_mph", "ndvi", "pop_density", "slope"]
             
@@ -177,7 +179,8 @@ def predict():
                 # Or maybe the issue is threading? XGBoost is not thread safe?
                 # Let's try robust_predict_fn again but catch everything
                 
-                explanation = explainer.explain_instance(instance, robust_predict_fn, num_samples=100)
+                # Use random_state to ensure consistent explanations for the same input
+                explanation = explainer.explain_instance(instance, robust_predict_fn, num_samples=100, random_state=42)
                 
                 with open("debug_log.txt", "a") as f:
                     f.write("Explanation generated.\n")
