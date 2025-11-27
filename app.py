@@ -179,8 +179,7 @@ def predict():
                 # Or maybe the issue is threading? XGBoost is not thread safe?
                 # Let's try robust_predict_fn again but catch everything
                 
-                # Use random_state to ensure consistent explanations for the same input
-                explanation = explainer.explain_instance(instance, robust_predict_fn, num_samples=100, random_state=42)
+                explanation = explainer.explain_instance(instance, robust_predict_fn, num_samples=100)
                 
                 with open("debug_log.txt", "a") as f:
                     f.write("Explanation generated.\n")
